@@ -1,0 +1,3 @@
+## Short project blurb for applications
+
+To strengthen my profile for astrochemistry- and MLIP-focused PhD projects, I built a small GitHub project that reproduces the logic of grain-surface reaction modelling at a toy level. The repository contains a workflow for generating synthetic silicate-like surface configurations, building simple descriptors, training a baseline machine-learning potential surrogate, scanning a toy reaction coordinate, and computing an IR-like spectrum from a trajectory signal. Although the labels are synthetic, the code structure is designed to be extended toward DFT-based NequIP or MACE workflows on realistic silicate and ice-covered surfaces.
