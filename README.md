@@ -139,3 +139,6 @@ While simplified, the codebase is designed to be extended toward DFT-driven MLIP
 Suvam kumar Das
 University of Zurich
 
+## Workflow
+
+![Workflow](figures/workflow.png)
