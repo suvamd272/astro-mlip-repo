@@ -142,3 +142,7 @@ University of Zurich
 ## Workflow
 
 ![Workflow](figures/workflow.png)
+
+## Example Output
+
+![Energy Scan](figures/energy_scan.png)
