@@ -1,145 +1,141 @@
-# Astro-MLIP Starter Repo
+# Astro MLIP Starter: Grain-Surface Reaction Exploration on Silicate-Like Models
 
-A compact starter repository for **astrochemistry-inspired machine learning interatomic potentials (MLIPs)**.
+## Overview
 
-This project is designed as a **portfolio/demo repo** for PhD applications involving:
-- grain-surface reactions in astrochemistry
-- silicate or ice-covered surfaces
-- machine learning interatomic potentials
-- reaction exploration and spectroscopy
+Astrochemistry-inspired MLIP starter project for grain-surface reactions: toy silicate surfaces, synthetic reference labels, reaction exploration, and IR-like analysis.
 
-It does **not** claim to be a production-ready MLIP. Instead, it shows that you understand the full workflow:
+This repository is a proof-of-work project designed to demonstrate an end-to-end workflow relevant to machine-learning interatomic potentials (MLIPs) for surface chemistry. It includes toy structure generation, synthetic energy labeling, descriptor-based regression, reaction-coordinate exploration, and simple spectral analysis.
 
-**reference data -> descriptors -> model training -> structure scoring -> toy reaction scan -> IR-like analysis**
+---
 
-## Why this repo is relevant
+## Motivation
 
-The Aarhus project is about building GNN-based interatomic potentials trained on DFT data to study reactions on realistic silicate grain surfaces. This starter repo mirrors that logic at a toy level:
+Chemical reactions on interstellar dust grains play an important role in astrochemistry, but realistic grain surfaces are structurally complex and chemically diverse. Silicate grains may be amorphous, compositionally variable, and partially covered by adsorbates such as water ice.
 
-1. create surface + adsorbate configurations
-2. generate mock reference energies and forces
-3. train a baseline ML model
-4. rank candidate structures / pathways
-5. compute a toy IR spectrum from a dipole-like trajectory signal
+These features make first-principles studies expensive and difficult to scale. This repository serves as a compact prototype mimicking an MLIP workflow:
 
-You can later replace the toy model with:
-- NequIP
-- MACE
-- Allegro
-- SchNet
+* Structure generation
+* Reference labeling
+* Surrogate model training
+* Reaction coordinate exploration
+* Scientific analysis
 
-## Repo structure
+The current implementation uses simplified models and synthetic labels but is structured for future extension toward real DFT datasets and modern equivariant ML models.
 
-```text
-astro_mlip_repo/
-├── README.md
-├── requirements.txt
-├── configs/
-│   └── demo_config.yaml
-├── examples/
-│   └── application_blurb.md
-├── scripts/
-│   └── run_demo.sh
-├── src/
-│   └── astro_mlip/
-│       ├── __init__.py
-│       ├── mock_dataset.py
-│       ├── features.py
-│       ├── train_toy_mlip.py
-│       ├── reaction_scan.py
-│       └── ir_spectrum.py
-└── tests/
-    └── test_features.py
-```
+---
 
-## What the demo does
+## Current Features
 
-### 1. Mock grain-surface dataset
-`mock_dataset.py` builds small toy structures containing:
-- a silicate-like slab made of Si/O atoms
-- optional Mg/Fe substitutions
-- a simple adsorbate (e.g. NH, HCN-like, or CH fragment)
+* Generates toy silicate-like surface structures
+* Assigns synthetic reference energies for rapid prototyping
+* Extracts simple descriptors for ML regression
+* Trains baseline regression models
+* Scans reaction-like coordinates
+* Produces IR-like / spectral-style outputs
+* Modular and extensible code structure
 
-The energies are synthetic but physically motivated:
-- short-range repulsion
-- attraction to undercoordinated surface regions
-- composition-dependent stabilization from Mg/Fe sites
+---
 
-This is just a stand-in for real DFT labels.
+## Repository Structure
 
-### 2. Baseline descriptors
-`features.py` computes simple geometry descriptors such as:
-- pair-distance summaries
-- minimum adsorbate-surface distance
-- local counts within cutoffs
-- composition counts
+* `src/` – core implementation
+* `configs/` – configuration files
+* `scripts/` – workflow scripts
+* `examples/` – usage examples
+* `tests/` – basic tests
+* `requirements.txt` – dependencies
 
-These are deliberately simple so the repo is lightweight and readable.
+---
 
-### 3. Toy MLIP training
-`train_toy_mlip.py` trains a regression model on the synthetic data and reports:
-- train/test RMSE
-- feature importance proxy
-- saved model artifact
+## Limitations
 
-### 4. Reaction exploration skeleton
-`reaction_scan.py` scans a toy reaction coordinate such as bond approach distance and scores configurations using the trained model.
+This repository uses **synthetic energies** and **simple descriptors**, so it is a proof-of-work project rather than a scientific benchmark.
 
-This mimics the idea of using a learned potential to explore reaction pathways more cheaply than DFT.
+Its purpose is to demonstrate:
 
-### 5. IR spectrum workflow
-`ir_spectrum.py` generates a toy dipole autocorrelation function and converts it into a spectrum-like signal.
+* clear scientific framing
+* familiarity with MLIP workflows
+* modular code organization
+* readiness for scaling to real datasets
 
-This connects to the project’s spectroscopy angle.
+It should not be interpreted as a quantitatively accurate model of silicate grain chemistry.
+
+---
+
+## Why This Project Matters
+
+Although simplified, this repository reflects key components of realistic atomistic ML workflows:
+
+* dataset construction
+* descriptor generation
+* surrogate modeling
+* reaction exploration
+* scientific visualization
+
+It is intended as a stepping stone toward real MLIP development using DFT reference data and modern architectures such as NequIP or MACE.
+
+---
 
 ## Installation
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+git clone git@github.com:YOUR_USERNAME/astro-mlip-repo.git
+cd astro-mlip-repo
 pip install -r requirements.txt
 ```
 
-## Run the full demo
+---
+
+## Example Usage
 
 ```bash
-bash scripts/run_demo.sh
+python scripts/run_example.py
 ```
 
-Or step by step:
+---
+
+## Tests
 
 ```bash
-PYTHONPATH=src python -m astro_mlip.mock_dataset --out data.csv --n-samples 500
-PYTHONPATH=src python -m astro_mlip.train_toy_mlip --data data.csv --model-out toy_model.joblib
-PYTHONPATH=src python -m astro_mlip.reaction_scan --model toy_model.joblib --out reaction_scan.csv
-PYTHONPATH=src python -m astro_mlip.ir_spectrum --out ir_spectrum.csv
+pytest -q
 ```
 
-## How to make this stronger for applications
+---
 
-Good upgrades for your GitHub:
+## Planned Upgrades
 
-1. Replace synthetic labels with a small DFT dataset.
-2. Export structures to XYZ/extended XYZ for ASE workflows.
-3. Add uncertainty estimation using ensembles.
-4. Compare transferability across clean vs substituted vs ice-covered surfaces.
-5. Add a notebook showing adsorption maps or reaction barrier sketches.
-6. Swap the baseline regressor for a true equivariant model.
+The following extensions will significantly improve realism and impact:
 
-## Suggested GitHub description
+1. Replace synthetic labels with DFT-computed energies
+2. Export structures to XYZ / extended XYZ for ASE workflows
+3. Add uncertainty estimation (ensemble models)
+4. Study transferability across surface environments
+5. Add visualization notebooks (adsorption maps, energy scans)
+6. Upgrade to equivariant ML models (NequIP / MACE)
 
-> Astrochemistry-inspired MLIP starter project for grain-surface reactions: toy silicate surfaces, synthetic reference labels, reaction exploration, and IR-like analysis.
+---
 
-## Suggested lines for your CV or application
+## HPC Readiness
 
-- Built a toy astrochemistry-inspired MLIP workflow for grain-surface reaction exploration on silicate-like surfaces.
-- Demonstrated an end-to-end pipeline from reference data generation to regression, reaction-coordinate scanning, and IR-like spectral analysis.
-- Designed the codebase to be easily extensible toward NequIP/MACE-based interatomic potentials on DFT datasets.
+This project is designed to scale toward high-performance workflows:
 
-## Limitations
+* large-scale structure generation
+* parallel DFT data generation
+* dataset curation
+* MLIP training on HPC systems
 
-This repository uses **synthetic energies** and **simple descriptors**, so it is a proof-of-work repo, not a scientific benchmark. Its purpose is to show:
-- clear scientific framing
-- familiarity with MLIP workflows
-- good code organization
-- readiness to scale to real DFT-based datasets
+---
+
+## Relevance to MLIP Development
+
+This repository was developed as a compact demonstration of how atomistic machine-learning workflows can be structured for surface-reaction problems.
+
+While simplified, the codebase is designed to be extended toward DFT-driven MLIPs and high-performance training workflows.
+
+---
+
+## Author
+
+Suvam kumar Das
+University of Zurich
+
